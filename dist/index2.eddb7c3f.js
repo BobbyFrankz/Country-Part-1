@@ -140,12 +140,12 @@
       this[globalName] = mainExports;
     }
   }
-})({"1Mq12":[function(require,module,exports) {
+})({"6BPv4":[function(require,module,exports) {
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "4a236f9275d0a351";
-module.bundle.HMR_BUNDLE_ID = "b5b6c481d56a3cb1";
+module.bundle.HMR_BUNDLE_ID = "ab49cac0eddb7c3f";
 "use strict";
 function _createForOfIteratorHelper(o, allowArrayLike) {
     var it;
@@ -458,68 +458,82 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"5HwUs":[function(require,module,exports) {
+},{}],"1hFYX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 console.log('Hallo daar!');
 // Schrijf een asynchrone functie die, met behulp van Axios, een GET-request maakt naar het juiste endpoint. Log de response in de console en bestudeer de data goed: hoe is het opgebouwd?
 // koppel index list
-const list = document.getElementById("list-of-country`s");
-async function fetchCountry() {
+const list = document.getElementById("country-list");
+async function fetchCountrySearch(countryName) {
+    const response = await _axiosDefault.default.get(`https://restcountries.com/v2/name/${countryName}`);
     try {
-        const result = await _axiosDefault.default.get('https://restcountries.com/v2/all');
-        console.log(result.data[0].name);
-        //sort it all
-        result.data.sort((a, b)=>a.population - b.population
-        );
+        // maak de list leeg
+        list.replaceChildren();
         //map door data
-        result.data.map((country)=>{
-            const newUl = document.createElement("ul");
-            newUl.setAttribute("class", "list-box");
+        response.data.map((country)=>{
+            const { flags: { png  } , name , capital , subregion , currencies , population , languages  } = country;
             //flags
             const flagCountry = document.createElement('img');
             flagCountry.setAttribute('src', country.flag);
             flagCountry.setAttribute('class', "country-flag");
-            newUl.appendChild(flagCountry);
+            list.appendChild(flagCountry);
             //maak list element
-            const firstCountry = document.createElement('li');
+            const firstCountry = document.createElement('p');
             firstCountry.textContent = country.name;
-            newUl.appendChild(firstCountry);
+            list.appendChild(firstCountry);
             //region
-            const countryRegion = document.createElement('li');
+            const countryRegion = document.createElement('p');
             countryRegion.textContent = country.region;
-            newUl.appendChild(countryRegion);
+            list.appendChild(countryRegion);
             //population
-            const popularCountry = document.createElement('li');
+            const popularCountry = document.createElement('p');
             popularCountry.textContent = `Has a population of ${country.population} people`;
-            newUl.appendChild(popularCountry);
-            list.appendChild(newUl);
-            // add colors
-            switch(country.region){
-                case 'Africa':
-                    firstCountry.style.color = 'blue';
-                    break;
-                case 'Americas':
-                    firstCountry.style.color = 'green';
-                    break;
-                case 'Asia':
-                    firstCountry.style.color = 'red';
-                    break;
-                case 'Europe':
-                    firstCountry.style.color = 'yellow';
-                    break;
-                case 'Oceania':
-                    firstCountry.style.color = 'purple';
-                    break;
-            }
+            list.appendChild(popularCountry);
+            //make array list of needed names.
+            let coinString;
+            const coinArray = currencies.map((coin)=>{
+                return coin.name;
+            });
+            // print strings currencies
+            if (currencies.length === 1) coinString = `you can pay with ${coinArray[0]}`;
+            else coinString = `you can pay with ${coinArray[0]} and ${coinArray[1]}`;
+            const currencyCountry = document.createElement("p");
+            currencyCountry.textContent = coinString;
+            list.appendChild(currencyCountry);
+            //make array list of needed names.
+            let languageString;
+            const languageArray = languages.map((speak)=>{
+                return speak.name;
+            });
         });
     //caches the errors
     } catch (e) {
         console.error(e);
     }
 }
-console.log(fetchCountry());
+///////////////zoek functie//////////////
+let value = "";
+function textValue(input) {
+    value = input.target.value;
+}
+const userInput = document.getElementById("input-search");
+userInput.addEventListener("keyup", textValue);
+userInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("search").click();
+        fetchCountrySearch(value);
+        userInput.value = "";
+    }
+});
+const button = document.getElementById('search');
+button.addEventListener('click', ()=>{
+    fetchCountrySearch(value);
+    userInput.value = "";
+}) //button vergelijkt de data en geeft data terug
+;
 
 },{"axios":"1IeuP","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1IeuP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -4645,6 +4659,6 @@ function isAxiosError(payload) {
 }
 exports.default = isAxiosError;
 
-},{"./../utils.js":"60BxC","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1Mq12","5HwUs"], "5HwUs", "parcelRequirecb08")
+},{"./../utils.js":"60BxC","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["6BPv4","1hFYX"], "1hFYX", "parcelRequirecb08")
 
-//# sourceMappingURL=index.d56a3cb1.js.map
+//# sourceMappingURL=index2.eddb7c3f.js.map

@@ -17,28 +17,36 @@ async function fetchCountry() {
         //sort it all
         result.data.sort ((a,b) => (a.population - b.population));
 
+
         //map door data
         result.data.map((country) => {
+
+        const newUl = document.createElement("ul");
+        newUl.setAttribute("class","list-box")
+
+
+            //flags
+            const flagCountry = document.createElement('img');
+            flagCountry.setAttribute('src',country.flag);
+            flagCountry.setAttribute('class',"country-flag")
+            newUl.appendChild(flagCountry)
 
             //maak list element
             const firstCountry = document.createElement('li');
             firstCountry.textContent = country.name;
-            list.appendChild(firstCountry);
+            newUl.appendChild(firstCountry);
 
             //region
             const countryRegion = document.createElement('li');
             countryRegion.textContent = country.region;
-            list.appendChild(countryRegion);
+            newUl.appendChild(countryRegion);
             //population
             const popularCountry = document.createElement('li');
             popularCountry.textContent  = `Has a population of ${country.population} people`;
-            list.appendChild(popularCountry);
-            //flags
-            const flagCountry = document.createElement('img');
-            flagCountry.setAttribute('src',country.flag);
-            flagCountry.setAttribute('class',"flag-country")
-            list.appendChild(flagCountry);
+            newUl.appendChild(popularCountry);
 
+
+            list.appendChild(newUl)
 
             // add colors
             switch (country.region) {
